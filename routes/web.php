@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//resource routes for user and company
+Route::resource('user', UserController::class);
+Route::resource('user', CompanyController::class);
