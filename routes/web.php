@@ -21,3 +21,5 @@ Route::get('/', function () {
 //resource routes for user and company
 Route::resource('user', UserController::class);
 Route::resource('company', CompanyController::class);
+Route::get('company/{id}/users', [CompanyController::class,'comapnyUsers']);
+Route::post('company/add/users', [CompanyController::class,'addUsers']);

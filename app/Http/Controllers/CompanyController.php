@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Company;
+use App\Models\User;
 
 class CompanyController extends Controller
 {
@@ -13,7 +15,10 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        //fetching all the companies from companies table
+        $companies = Company::all();
+        
+        return view('company.index',compact('companies'));
     }
 
     /**
@@ -23,7 +28,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('company.create');
     }
 
     /**
@@ -34,7 +39,15 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //store the company data
+       
+        try{
+            $company = Company::create(['name' => $request->name]);
+        }
+        catch(Exception $e){
+            return $e;
+        }
+        return redirect('company');
     }
 
     /**
@@ -56,7 +69,9 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        //fetching company with the provided id
+        $company = Company::where('id',$id)->first();
+        return view('company.edit',compact('company','id'));
     }
 
     /**
@@ -68,7 +83,14 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        ///updating the company data related to the $id
+        try{
+            $company = Company::where('id',$id)->update(['name' => $request->name]);
+        }
+        catch(Exception $e){
+            return $e;
+        }
+        return redirect('company');
     }
 
     /**
@@ -79,6 +101,26 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
+         //destroy|delete company with $id
+         $company = Company::where('id',$request->id)->delete();
+        
+         return response()->json(['message'=>'Company deleted successfuly'],200);
+    }
+
+    public function comapnyUsers($id)
+    {
+         //fetach the company with the users
+         $company = Company::where('id',$id)->with('users')->first();
+        // fetach all user
+        $users = User::all();
+         return view('company.company_users',compact('company','users'));
+    }
+
+    public function addUsers(Request $request)
+    {
+         //destroy|delete company with $id
+         $company = Company::where('id',$request->id)->delete();
+        
+         return response()->json(['message'=>'Company deleted successfuly'],200);
     }
 }

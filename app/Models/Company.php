@@ -9,6 +9,10 @@ class Company extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+    ];
+
     /**
      * The users that belong to the campany.
      */
