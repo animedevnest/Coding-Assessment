@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CompanyController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,4 +20,4 @@ Route::get('/', function () {
 
 //resource routes for user and company
 Route::resource('user', UserController::class);
-Route::resource('user', CompanyController::class);
+Route::resource('company', CompanyController::class);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -13,7 +14,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        //fetching all the users from user table
+        $users = User::all();
+        
+        return view('users.index',compact('users'));
     }
 
     /**
@@ -23,7 +27,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        //return crate blade
+        return view('users.create');
     }
 
     /**
@@ -34,7 +39,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //store the user data
+       
+        try{
+            $user = User::create(['email' => $request->email,
+            'name' => $request->name,
+            'password' => $request->name]);
+        }
+        catch(Exception $e){
+            return $e;
+        }
+        return redirect('user');
     }
 
     /**
@@ -56,7 +71,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        //fetching user with the provided id
+        $user = User::where('id',$id)->first();
+        return view('users.edit',compact('user','id'));
     }
 
     /**
@@ -68,7 +85,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //updating the user data related to the $id
+        try{
+            $user = User::where('id',$id)->update(['email' => $request->email,
+            'name' => $request->name]);
+        }
+        catch(Exception $e){
+            return $e;
+        }
+        return redirect('user');
     }
 
     /**
@@ -77,8 +102,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        //destroy|delete user with $id
+       
+        $user = User::where('id',$request->id)->delete();
+        
+        return response()->json(['message'=>'User deleted successfuly'],200);
     }
 }
