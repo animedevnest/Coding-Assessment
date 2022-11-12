@@ -5,17 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Add New Compnay') }}</div>
+                <div class="card-header">{{ __('Update Compnay') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('compnay.update',$id) }}">
+                    <form method="POST" action="{{ route('company.update',$id) }}">
                         @method('PATCH')
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $compnay->name }}" required >
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $company->name }}" required >
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">

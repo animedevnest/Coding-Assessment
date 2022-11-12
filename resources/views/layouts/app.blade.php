@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-md-5 col-sm-12 col-12">
                         <div class="copyright-text">
-                            <p>© @php $year = date('Y'); echo $year @endphp Nimayate Corporate Solutions. All Rights Reserved .</p>
+                            <p>© @php $year = date('Y'); echo $year @endphp All Rights Reserved .</p>
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 @section('content')
 <div class="main-content">
     <div class="page-title">
-        <h1>Comapany List</h1>
+        <h1>Company List</h1>
         <div>
             <a href="{{route('company.create')}}" class="btn btn-dark ml-3">Add Company</a>
         </div>
@@ -24,7 +24,7 @@
                             @forelse ($companies as $key => $company)
                                     <tr>
                                         <td>{{$company->name}}</td>
-                                        <td><a href='{{ url("company/".$company->id."/users") }}' class="btn-sm btn-info">Add Users</a></td>
+                                        <td><a href='{{ url("company/users/".$company->id) }}' class="btn-sm btn-info">Add Users</a></td>
                                         <td><a href='{{ url("company/".$company->id."/edit") }}' class="btn-sm btn-warning">Edit</a></td>
                                         <td>
                                             <a href="javascript:void(0)" onclick="companyDelete('{{$company->id}}')" class="btn-sm btn-danger">Delete</a>

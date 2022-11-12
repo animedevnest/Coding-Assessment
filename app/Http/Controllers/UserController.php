@@ -39,9 +39,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //store the user data
-       
+        
+        //name validation only accepted alphabetic characters
+        //email valition unique email
+       $request->validate([
+        'email' => 'required|email|unique:users,email',
+        'name' => 'required|regex:/^[a-zA-Z]+$/u'
+       ]);
         try{
+            //store the user data
             $user = User::create(['email' => $request->email,
             'name' => $request->name,
             'password' => $request->name]);
@@ -85,6 +91,12 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //name validation only accepted alphabetic characters
+        //email valition unique email
+        $request->validate([
+            'email' => 'required|email|unique:users,email,'.$id,
+            'name' => 'required|regex:/^[a-zA-Z]+$/u'
+           ]);
         //updating the user data related to the $id
         try{
             $user = User::where('id',$id)->update(['email' => $request->email,

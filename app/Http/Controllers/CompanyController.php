@@ -39,6 +39,10 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        //name validation only accepted alphabetic characters
+        $request->validate([
+            'name' => 'required|regex:/^[a-zA-Z]+$/u'
+           ]);
         //store the company data
        
         try{
@@ -83,6 +87,10 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //name validation only accepted alphabetic characters
+        $request->validate([
+            'name' => 'required|regex:/^[a-zA-Z]+$/u'
+           ]);
         ///updating the company data related to the $id
         try{
             $company = Company::where('id',$id)->update(['name' => $request->name]);
@@ -99,7 +107,7 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
          //destroy|delete company with $id
          $company = Company::where('id',$request->id)->delete();
