@@ -62,11 +62,11 @@
                 },
                 success:function(data)
                 {
-                    console.log(data);
+                    // console.log(data);
                     swal(data['message']);
-                    // setTimeout(() => {
-                    //     location.reload();
-                    // }, 2000);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
                 },
                 error: function(request, status, error) {
 

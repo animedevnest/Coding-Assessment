@@ -111,16 +111,19 @@ class CompanyController extends Controller
     {
          //fetach the company with the users
          $company = Company::where('id',$id)->with('users')->first();
+         //get user ids from relationship and convert them to array
+        $company_user = $company->users()->pluck('user_id')->toArray();
         // fetach all user
-        $users = User::all();
-         return view('company.company_users',compact('company','users'));
+            $users = User::all();
+         return view('company.company_users',compact('company','users','company_user'));
     }
 
     public function addUsers(Request $request)
     {
          //destroy|delete company with $id
-         $company = Company::where('id',$request->id)->delete();
-        
-         return response()->json(['message'=>'Company deleted successfuly'],200);
+         $company = Company::find($request->id);
+         $company->users()->sync($request->user);
+
+         return response()->json(['message'=>'User added in company successfuly'],200);
     }
 }
