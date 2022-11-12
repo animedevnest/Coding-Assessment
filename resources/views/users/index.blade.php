@@ -7,6 +7,15 @@
         <div>
             <a href="{{route('user.create')}}" class="btn btn-dark ml-3">Add User</a>
         </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
     <div class="page-content">
         <div class="row">
@@ -69,10 +78,6 @@
                     }, 2000);
                 },
                 error: function(request, status, error) {
-
-                spinner.hide();
-
-                $('.error').empty();
                 json = $.parseJSON(request.responseText);
                 $.each(json.errors, function(key, value) {
                     var error_key = value;

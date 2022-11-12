@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
 
 class UserController extends Controller
 {
@@ -78,7 +79,14 @@ class UserController extends Controller
     public function edit($id)
     {
         //fetching user with the provided id
-        $user = User::where('id',$id)->first();
+        try{
+            $user = User::findOrFail($id);
+        }
+        catch (ModelNotFoundException $e) {
+            if ($e instanceof ModelNotFoundException) {
+                return back()->withError('Record not found');
+            }
+        }
         return view('users.edit',compact('user','id'));
     }
 
@@ -117,9 +125,15 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         //destroy|delete user with $id
-       
-        $user = User::where('id',$request->id)->delete();
-        
+        try{
+            $user = User::findOrFail($request->id);
+        }
+        catch (ModelNotFoundException $e) {
+            if ($e instanceof ModelNotFoundException) {
+                return back()->withError('Record not found');
+            }
+        }
+        $user->delete();
         return response()->json(['message'=>'User deleted successfuly'],200);
     }
 }

@@ -49,10 +49,6 @@
                     }, 2000);
                 },
                 error: function(request, status, error) {
-
-                spinner.hide();
-
-                $('.error').empty();
                 json = $.parseJSON(request.responseText);
                 $.each(json.errors, function(key, value) {
                     var error_key = value;
